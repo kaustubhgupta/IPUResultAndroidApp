@@ -1,20 +1,41 @@
 from kivymd.app import MDApp
+from kivy.uix.screenmanager import Screen, ScreenManager
+from kivy.properties import ObjectProperty
 from kivy.lang import Builder
-kv = """
-Screen:
-    MDLabel:
-        text: "IPU Results Puller"
-        font_style: "H3"
-        halign: 'center'
 
-"""
+
+class WindowManager(ScreenManager):
+    pass
+
+
+class About(Screen):
+    pass
+
+
+class Contact(Screen):
+    pass
+
+
+class Website(Screen):
+    pass
+
+
+class Telegrambot(Screen):
+    pass
+
+
+class MyGrid(Screen):
+    number = ObjectProperty(None)
+
+    def btn(self):
+        print("Number: ", self.number.text)
+        self.number.text = ''
 
 
 class ResultApp(MDApp):
     def build(self):
-        self.theme_cls.primary_palette = "Green"
-        self.theme_cls.primary_hue = "A700"
-        return Builder.load_string(kv)
+        kv = Builder.load_file('result.kv')
+        return kv
 
 
 ResultApp().run()

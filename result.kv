@@ -1,0 +1,81 @@
+WindowManager:
+    id: "manage"
+    MyGrid:
+    About:
+    Contact:
+    Website:
+    Telegrambot:
+
+<MyGrid>:
+    number: number
+    name: "main-screen"
+    MDTextField:
+        id: number
+        hint_text: "Enter your enrollment number"
+        helper_text_mode: "on_focus"
+        icon_right: "account-search"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        size_hint_x: None
+        width: 300
+        required: True
+    MDRectangleFlatButton:
+        text: 'Submit'
+        pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+        on_press: root.btn()
+    NavigationLayout:
+        ScreenManager:
+            Screen:
+                BoxLayout:
+                    orientation: "vertical"
+                    MDToolbar:
+                        title: "IPU Results App"
+                        left_action_items: [["menu", lambda x: nav_drawer.toggle_nav_drawer()]]
+                        elevation: 10
+                    Widget:
+        MDNavigationDrawer:
+            id: nav_drawer
+            BoxLayout:
+                orientation: "vertical"
+                spacing: '8dp'
+                padding: '8dp'
+                Image:
+                    source: "logo.jpg"
+                    size_hint_x: 0.5
+                MDLabel:
+                    text: "IPU Results App"
+                    font_style: "Subtitle1"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                MDLabel:
+                    text: "from creator of IPUResults"
+                    font_style: "Caption"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                ScrollView:
+                    MDList:
+                        OneLineIconListItem:
+                            text: "About"
+                            IconLeftWidget:
+                                icon: 'information'
+                        OneLineIconListItem:
+                            text: "Contact"
+                            IconLeftWidget:
+                                icon: 'contacts'
+                        OneLineIconListItem:
+                            text: "Visit website"
+                            IconLeftWidget:
+                                icon: 'web'
+                        OneLineIconListItem:
+                            text: "Telegram Bot"
+                            IconLeftWidget:
+                                icon: 'telegram'
+
+
+<About>:
+    name: "about-screen"
+    MDLabel:
+        text: "This is about section"
+        halign: "center"
