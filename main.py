@@ -1,30 +1,10 @@
 from kivymd.app import MDApp
-from kivy.uix.screenmanager import Screen, ScreenManager
-from kivy.properties import ObjectProperty
 from kivy.lang import Builder
+from kivy.uix.screenmanager import Screen
+from kivy.properties import ObjectProperty
 
 
-class WindowManager(ScreenManager):
-    pass
-
-
-class About(Screen):
-    pass
-
-
-class Contact(Screen):
-    pass
-
-
-class Website(Screen):
-    pass
-
-
-class Telegrambot(Screen):
-    pass
-
-
-class MyGrid(Screen):
+class MainScreen(Screen):
     number = ObjectProperty(None)
 
     def btn(self):
@@ -32,10 +12,10 @@ class MyGrid(Screen):
         self.number.text = ''
 
 
-class ResultApp(MDApp):
+class MainApp(MDApp):
     def build(self):
-        kv = Builder.load_file('result.kv')
-        return kv
+        kv =  Builder.load_file('result.kv')
+        return MainScreen()
 
 
-ResultApp().run()
+MainApp().run()

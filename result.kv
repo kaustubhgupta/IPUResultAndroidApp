@@ -1,38 +1,84 @@
-WindowManager:
-    id: "manage"
-    MyGrid:
-    About:
-    Contact:
-    Website:
-    Telegrambot:
-
-<MyGrid>:
+<MainScreen>:
     number: number
-    name: "main-screen"
-    MDTextField:
-        id: number
-        hint_text: "Enter your enrollment number"
-        helper_text_mode: "on_focus"
-        icon_right: "account-search"
-        icon_right_color: app.theme_cls.primary_color
-        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-        size_hint_x: None
-        width: 300
-        required: True
-    MDRectangleFlatButton:
-        text: 'Submit'
-        pos_hint: {'center_x': 0.5, 'center_y': 0.4}
-        on_press: root.btn()
     NavigationLayout:
         ScreenManager:
+            id: screen_manager
             Screen:
+                name: "home-screen"
+                MDLabel:
+                    text: "Welcome to IPU Results App"
+                    halign: "center"
+                    font_style: "H3"
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "Home"
+                        left_action_items: [["menu", lambda x: nav_drawer.set_state()]]
+                        elevation :12
+
+                    Widget:
+
+
+            Screen:
+                name: "about-screen"
                 BoxLayout:
                     orientation: "vertical"
                     MDToolbar:
-                        title: "IPU Results App"
-                        left_action_items: [["menu", lambda x: nav_drawer.toggle_nav_drawer()]]
-                        elevation: 10
+                        title: "About"
+                        left_action_items: [["menu", lambda x: nav_drawer.set_state()]]
+                        elevation :12
+
                     Widget:
+
+                MDLabel:
+                    text: "About Section"
+                    halign: "center"
+
+
+            Screen:
+                name: "contact-screen"
+                BoxLayout:
+                    orientation: "vertical"
+                    MDToolbar:
+                        title: "Contact"
+                        left_action_items: [["menu", lambda x: nav_drawer.set_state()]]
+                        elevation :12
+
+                    Widget:
+
+                MDLabel:
+                    text: "Contact Section"
+                    halign: "center"
+
+
+            Screen:
+                name: "input-screen"
+                BoxLayout:
+                    orientation: "vertical"
+                    MDToolbar:
+                        title: "Result"
+                        left_action_items: [["menu", lambda x: nav_drawer.set_state()]]
+                        elevation :12
+
+                    Widget:
+
+                MDTextField:
+                    id: number
+                    hint_text: "Enter your enrollment number"
+                    helper_text_mode: "on_focus"
+                    icon_right: "account-search"
+                    icon_right_color: app.theme_cls.primary_color
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    size_hint_x: None
+                    width: 300
+                    required: True
+
+                MDRectangleFlatButton:
+                    text: 'Submit'
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+                    on_press: root.btn()
+
+
         MDNavigationDrawer:
             id: nav_drawer
             BoxLayout:
@@ -41,41 +87,60 @@ WindowManager:
                 padding: '8dp'
                 Image:
                     source: "logo.jpg"
-                    size_hint_x: 0.5
+                    size_hint_x:
                 MDLabel:
                     text: "IPU Results App"
-                    font_style: "Subtitle1"
+                    font_style: "H4"
                     size_hint_y: None
                     height: self.texture_size[1]
 
                 MDLabel:
-                    text: "from creator of IPUResults"
-                    font_style: "Caption"
+                    text: "From the Creator of IPUResults Website & IPUTelegrambot"
+                    font_style: "Subtitle1"
                     size_hint_y: None
                     height: self.texture_size[1]
 
                 ScrollView:
                     MDList:
-                        OneLineIconListItem:
+                        OneLineAvatarListItem:
+                            on_press:
+                                nav_drawer.set_state("close")
+                                screen_manager.current = "home-screen"
+                            text: "Home"
+                            IconLeftWidget:
+                                icon: "home"
+
+                        OneLineAvatarListItem:
+                            on_press:
+                                nav_drawer.set_state("close")
+                                screen_manager.current = "about-screen"
                             text: "About"
                             IconLeftWidget:
                                 icon: 'information'
-                        OneLineIconListItem:
+
+
+                        OneLineAvatarListItem:
+                            on_press:
+                                nav_drawer.set_state("close")
+                                screen_manager.current = "input-screen"
+                            text: "Check Results"
+                            IconLeftWidget:
+                                icon: "account-search"
+
+                        OneLineAvatarListItem:
+                            on_press:
+                                nav_drawer.set_state("close")
+                                screen_manager.current = "contact-screen"
                             text: "Contact"
                             IconLeftWidget:
-                                icon: 'contacts'
-                        OneLineIconListItem:
+                                icon: "contacts"
+
+                        OneLineAvatarListItem:
                             text: "Visit website"
                             IconLeftWidget:
-                                icon: 'web'
-                        OneLineIconListItem:
+                                icon: "web"
+
+                        OneLineAvatarListItem:
                             text: "Telegram Bot"
                             IconLeftWidget:
-                                icon: 'telegram'
-
-
-<About>:
-    name: "about-screen"
-    MDLabel:
-        text: "This is about section"
-        halign: "center"
+                                icon: "telegram"
