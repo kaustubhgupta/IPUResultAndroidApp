@@ -4,6 +4,7 @@ from kivy.uix.screenmanager import Screen
 from kivy.properties import ObjectProperty
 from kivy.network.urlrequest import UrlRequest
 from kivymd.uix.menu import MDDropdownMenu
+from kivymd.uix.dialog import MDDialog
 
 
 class MainScreen(Screen):
@@ -11,6 +12,10 @@ class MainScreen(Screen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.dialog = MDDialog(
+            text="Oops! Something seems to have gone wrong with your enrollment number or our server is not responding! Please try again after sometime :/",
+            radius=[20, 7, 20, 7],
+        )
         self.semester_get = ''
         self.batch_get = ''
         self.menu_items_batch = [{"text": "17"}, {"text": "18"}]
@@ -45,20 +50,21 @@ class MainScreen(Screen):
         self.menu_batch.dismiss()
 
     def btn(self):
+
         baseurl = "https://ipuresultskg.herokuapp.com/"
         url = baseurl + 'api?rollNo={}&batch={}&semester={}'.format(self.number.text, self.batch_get, self.semester_get)
         self.request = UrlRequest(url=url, on_success=self.res)
 
     def res(self, *args):
         self.data = self.request.result
-        print(self.data)
+        #print(self.data)
         sm = self.ids['screen_manager']
-        sm.current = "result-screen"
         ans = self.data
         label = self.ids['marks']
         if ans is None:
-            label.text = "*Error! Possible Reasons:*\n1. Wrong enrollment number or combination selected\n2. Result not available in our database"
+            self.dialog.open()
         else:
+            sm.current = "result-screen"
             marks = ' '.join([' '.join(i) + str('\n') for i in
                               [[j.strip() for j in i.split('  ') if j != ''] for i in ans[0].split('\n')[1:]]])
             to_send = "*MARKS SUMMARY Semester-{}*".format(self.semester_get) + str('\n') + "Name: " + str(
