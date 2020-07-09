@@ -90,13 +90,23 @@
                     width: 300
                     required: True
 
+                MDRaisedButton:
+                    id: drop_semester
+                    pos_hint: {'center_x': .6, 'center_y': .4}
+                    text: 'Semester'
+                    on_release: root.menu_semester.open()
+
+                MDRaisedButton:
+                    id: drop_batch
+                    pos_hint: {'center_x': .36, 'center_y': .4}
+                    text: 'Batch'
+                    on_release: root.menu_batch.open()
+
                 MDRectangleFlatButton:
                     text: 'Submit'
-                    pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.3}
                     on_press:
                         root.btn()
-
-
 
         MDNavigationDrawer:
             id: nav_drawer

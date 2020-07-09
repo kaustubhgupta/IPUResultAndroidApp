@@ -1,18 +1,52 @@
 from kivymd.app import MDApp
 from kivy.lang import Builder
-from kivy.uix.screenmanager import Screen, ScreenManager
+from kivy.uix.screenmanager import Screen
 from kivy.properties import ObjectProperty
 from kivy.network.urlrequest import UrlRequest
-import json
+from kivymd.uix.menu import MDDropdownMenu
 
 
 class MainScreen(Screen):
     number = ObjectProperty(None)
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.semester_get = ''
+        self.batch_get = ''
+        self.menu_items_batch = [{"text": "17"}, {"text": "18"}]
+        self.menu_batch = MDDropdownMenu(
+            caller=self.ids.drop_batch,
+            items=self.menu_items_batch,
+            pos_hint={'center_x': .36, 'center_y': .4},
+            callback=self.set_batch,
+            width_mult=4,
+        )
+        self.menu_items_semester = [{"text": f"{i}"} for i in range(1, 9)]
+        self.menu_semester = MDDropdownMenu(
+            caller=self.ids.drop_semester,
+            items=self.menu_items_semester,
+            pos_hint={'center_x': .6, 'center_y': .4},
+            callback=self.set_semester,
+            width_mult=4,
+        )
+        self.request = ''
+        self.data = ''
+
+    def set_semester(self, instance):
+        self.ids.drop_semester.text = instance.text
+        self.semester_get = instance.text
+        print(instance.text)
+        self.menu_semester.dismiss()
+
+    def set_batch(self, instance):
+        self.ids.drop_batch.text = instance.text
+        self.batch_get = instance.text
+        print(instance.text)
+        self.menu_batch.dismiss()
+
     def btn(self):
-        # print("Number: ", self.number.text)
         baseurl = "https://ipuresultskg.herokuapp.com/"
-        url = baseurl + 'api?rollNo={}&batch=18&semester=1'.format(self.number.text)
+        url = baseurl + 'api?rollNo={}&batch={}&semester={}'.format(self.number.text, self.batch_get, self.semester_get)
         self.request = UrlRequest(url=url, on_success=self.res)
 
     def res(self, *args):
@@ -23,10 +57,12 @@ class MainScreen(Screen):
         ans = self.data
         label = self.ids['marks']
         if ans is None:
-            label.text = "Result not found"
+            label.text = "*Error! Possible Reasons:*\n1. Wrong enrollment number or combination selected\n2. Result not available in our database"
         else:
-            marks = ' '.join([' '.join(i) + str('\n') for i in [[j.strip() for j in i.split('  ') if j != ''] for i in ans[0].split('\n')[1:]]])
-            to_send = "*MARKS SUMMARY Semester-1*"  + str('\n') + "Name: " + str(ans[4]) + str(
+            marks = ' '.join([' '.join(i) + str('\n') for i in
+                              [[j.strip() for j in i.split('  ') if j != ''] for i in ans[0].split('\n')[1:]]])
+            to_send = "*MARKS SUMMARY Semester-{}*".format(self.semester_get) + str('\n') + "Name: " + str(
+                ans[4]) + str(
                 '\n') + "Enrollment Number: " + str(ans[5]) + str('\n') + "College: " + str(ans[1]) + str('\n') + str(
                 "Branch: ") + str(ans[2]) + str('\n') + "Percentage: " + str(ans[10]) + str(
                 '%\n') + "College Rank :{}/{}".format(ans[6], ans[7]) + str('\n') + "University Rank :{}/{}\n".format(
