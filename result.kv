@@ -65,7 +65,7 @@
 
                 MDLabel:
                     id: marks
-                    text: "Nothing now"
+                    text: ""
 
 
             Screen:
@@ -107,6 +107,11 @@
                     pos_hint: {'center_x': 0.5, 'center_y': 0.3}
                     on_press:
                         root.btn()
+
+                MDLabel:
+                    id: loading
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+                    text: ''
 
         MDNavigationDrawer:
             id: nav_drawer

@@ -50,21 +50,25 @@ class MainScreen(Screen):
         self.menu_batch.dismiss()
 
     def btn(self):
-
+        label = self.ids.loading
+        label.text = "Wait! Your result is being prepared :)"
         baseurl = "https://ipuresultskg.herokuapp.com/"
         url = baseurl + 'api?rollNo={}&batch={}&semester={}'.format(self.number.text, self.batch_get, self.semester_get)
         self.request = UrlRequest(url=url, on_success=self.res)
 
     def res(self, *args):
         self.data = self.request.result
-        #print(self.data)
         sm = self.ids['screen_manager']
         ans = self.data
         label = self.ids['marks']
+
         if ans is None:
             self.dialog.open()
+            self.ids.loading.text = ''
+
         else:
             sm.current = "result-screen"
+            self.ids.loading.text = ''
             marks = ' '.join([' '.join(i) + str('\n') for i in
                               [[j.strip() for j in i.split('  ') if j != ''] for i in ans[0].split('\n')[1:]]])
             to_send = "*MARKS SUMMARY Semester-{}*".format(self.semester_get) + str('\n') + "Name: " + str(
