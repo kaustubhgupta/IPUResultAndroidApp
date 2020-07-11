@@ -5,6 +5,8 @@ from kivy.properties import ObjectProperty
 from kivy.network.urlrequest import UrlRequest
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.dialog import MDDialog
+from kivymd.uix.spinner import MDSpinner
+import webbrowser
 
 
 class MainScreen(Screen):
@@ -12,8 +14,12 @@ class MainScreen(Screen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.dialog = MDDialog(
+        self.dialog_error = MDDialog(
             text="Oops! Something seems to have gone wrong with your enrollment number or our server is not responding! Please try again after sometime :/",
+            radius=[20, 7, 20, 7],
+        )
+        self.dialog_network = MDDialog(
+            text="Oops! No internet available! Please try again after sometime :/",
             radius=[20, 7, 20, 7],
         )
         self.semester_get = ''
@@ -37,6 +43,10 @@ class MainScreen(Screen):
         self.request = ''
         self.data = ''
 
+
+    def openweb(instance, link):
+        webbrowser.open(link)
+
     def set_semester(self, instance):
         self.ids.drop_semester.text = instance.text
         self.semester_get = instance.text
@@ -56,6 +66,9 @@ class MainScreen(Screen):
         url = baseurl + 'api?rollNo={}&batch={}&semester={}'.format(self.number.text, self.batch_get, self.semester_get)
         self.request = UrlRequest(url=url, on_success=self.res)
 
+    def network(self, *args):
+        return self.dialog_network
+
     def res(self, *args):
         self.data = self.request.result
         sm = self.ids['screen_manager']
@@ -63,7 +76,7 @@ class MainScreen(Screen):
         label = self.ids['marks']
 
         if ans is None:
-            self.dialog.open()
+            self.dialog_error.open()
             self.ids.loading.text = ''
 
         else:

@@ -9,7 +9,7 @@
                 MDLabel:
                     text: "Welcome to IPU Results App"
                     halign: "center"
-                    font_style: "H3"
+                    font_style: "H4"
                 BoxLayout:
                     orientation: 'vertical'
                     MDToolbar:
@@ -32,8 +32,9 @@
                     Widget:
 
                 MDLabel:
-                    text: "About Section"
+                    text: "This app is made as an [b]extension to the current website[/b] and telegram bot.[i] Using this app you can fetch your results which usually come in the form of long PDFs which are difficult to analyse. There are numerous columns with different subject codes which often confuses the student. We aim to resolve this difficulty and make your experience better[/i]. [b]New features, data and functionality will be added as the app progress[/b]. Feel free to drop any message related to discrepancy or any other suggestion. Check out the contact tab for that."
                     halign: "center"
+                    markup: True
 
 
             Screen:
@@ -46,10 +47,48 @@
                         elevation :12
 
                     Widget:
+                BoxLayout:
+                    orientation: "vertical"
+                    MDLabel:
+                        text: ""
+                    MDList:
+                        OneLineAvatarListItem:
+                            on_press: root.openweb("https://www.instagram.com/kaustubhgupta1828/")
+                            text: "Instagram"
+                            IconLeftWidget:
+                                icon: "instagram"
 
-                MDLabel:
-                    text: "Contact Section"
-                    halign: "center"
+                        OneLineAvatarListItem:
+                            on_press: root.openweb("https://www.facebook.com/kaustubh.gupta.1828/")
+                            text: "Facebook"
+                            IconLeftWidget:
+                                icon: 'facebook'
+
+
+                        OneLineAvatarListItem:
+                            on_press: root.openweb("https://twitter.com/Kaustubh1828")
+                            text: "Twitter"
+                            IconLeftWidget:
+                                icon: "twitter"
+
+                        OneLineAvatarListItem:
+                            on_press: root.openweb("https://www.linkedin.com/in/kaustubh-gupta-612767ab/")
+                            text: "Linkedin"
+                            IconLeftWidget:
+                                icon: "linkedin"
+
+                        OneLineAvatarListItem:
+                            on_press: root.openweb("https://github.com/kaustubhgupta")
+                            text: "GitHub"
+                            IconLeftWidget:
+                                icon: "gitlab"
+
+                        OneLineAvatarListItem:
+                            on_press: root.openweb("https://www.kaustubhgupta.xyz/")
+                            text: "Personal Blogging Website"
+                            IconLeftWidget:
+                                icon: "web"
+                    Widget:
 
 
             Screen:
@@ -66,6 +105,7 @@
                 MDLabel:
                     id: marks
                     text: ""
+
 
 
             Screen:
@@ -173,11 +213,13 @@
                                 icon: "contacts"
 
                         OneLineAvatarListItem:
+                            on_press: root.openweb("https://ipuresultskg.herokuapp.com/")
                             text: "Visit website"
                             IconLeftWidget:
                                 icon: "web"
 
                         OneLineAvatarListItem:
+                            on_press: root.openweb("https://t.me/ipuBOT")
                             text: "Telegram Bot"
                             IconLeftWidget:
                                 icon: "telegram"
