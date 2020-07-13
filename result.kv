@@ -7,9 +7,10 @@
             Screen:
                 name: "home-screen"
                 MDLabel:
-                    text: "Welcome to IPU Results App"
+                    text: "[b]Welcome to IPU Results App[/b]"
                     halign: "center"
                     font_style: "H4"
+                    markup: True
                 BoxLayout:
                     orientation: 'vertical'
                     MDToolbar:
@@ -32,7 +33,7 @@
                     Widget:
 
                 MDLabel:
-                    text: "This app is made as an [b]extension to the current website[/b] and telegram bot.[i] Using this app you can fetch your results which usually come in the form of long PDFs which are difficult to analyse. There are numerous columns with different subject codes which often confuses the student. We aim to resolve this difficulty and make your experience better[/i]. [b]New features, data and functionality will be added as the app progress[/b]. Feel free to drop any message related to discrepancy or any other suggestion. Check out the contact tab for that."
+                    text: "This app is made as an [b]extension to the current website[/b] and [b]telegram bot[/b].[i] Using this app you can fetch your results which usually come in the form of long PDFs which are difficult to analyse. There are numerous columns with different subject codes which often confuses the student. We aim to resolve this difficulty and make your experience better[/i]. [b]New features, data and functionality will be added as the app progress[/b]. Feel free to drop any message related to any discrepancy or any other suggestion. Check out the contact tab for that."
                     halign: "center"
                     markup: True
 
@@ -84,6 +85,12 @@
                                 icon: "gitlab"
 
                         OneLineAvatarListItem:
+                            on_press: root.openweb("https://medium.com/@kaustubhgupta1828")
+                            text: "Medium"
+                            IconLeftWidget:
+                                icon: "medium"
+
+                        OneLineAvatarListItem:
                             on_press: root.openweb("https://www.kaustubhgupta.xyz/")
                             text: "Personal Blogging Website"
                             IconLeftWidget:
@@ -103,10 +110,22 @@
                     Widget:
 
                 MDLabel:
-                    id: marks
+                    halign: "center"
+                    text: "[b]Marks Summary[/b]"
+                    markup: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+                    font_style: "H6"
+
+                MDLabel:
+                    id: other_info
+                    halign: "center"
                     text: ""
+                    markup: True
 
-
+                MDRectangleFlatButton:
+                    text: 'Marks'
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+                    on_press: root.datatables.open()
 
             Screen:
                 name: "input-screen"

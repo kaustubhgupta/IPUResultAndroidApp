@@ -5,7 +5,8 @@ from kivy.properties import ObjectProperty
 from kivy.network.urlrequest import UrlRequest
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.dialog import MDDialog
-from kivymd.uix.spinner import MDSpinner
+from kivymd.uix.datatables import MDDataTable
+from kivy.metrics import dp
 import webbrowser
 
 
@@ -24,7 +25,7 @@ class MainScreen(Screen):
         )
         self.semester_get = ''
         self.batch_get = ''
-        self.menu_items_batch = [{"text": "17"}, {"text": "18"}]
+        self.menu_items_batch = [{"text": "17"}, {"text": "18"}, {"text": "19"}]
         self.menu_batch = MDDropdownMenu(
             caller=self.ids.drop_batch,
             items=self.menu_items_batch,
@@ -42,6 +43,7 @@ class MainScreen(Screen):
         )
         self.request = ''
         self.data = ''
+        self.datatables = ''
 
 
     def openweb(instance, link):
@@ -73,7 +75,6 @@ class MainScreen(Screen):
         self.data = self.request.result
         sm = self.ids['screen_manager']
         ans = self.data
-        label = self.ids['marks']
 
         if ans is None:
             self.dialog_error.open()
@@ -82,16 +83,26 @@ class MainScreen(Screen):
         else:
             sm.current = "result-screen"
             self.ids.loading.text = ''
-            marks = ' '.join([' '.join(i) + str('\n') for i in
-                              [[j.strip() for j in i.split('  ') if j != ''] for i in ans[0].split('\n')[1:]]])
-            to_send = "*MARKS SUMMARY Semester-{}*".format(self.semester_get) + str('\n') + "Name: " + str(
+            marks = [tuple(i) for i in [[j.strip() for j in i.split('  ') if j != ''] for i in ans[0].split('\n')[1:]]]
+            info = self.ids['other_info']
+            to_send = "[i]Semester-{}".format(self.semester_get) + str('\n') + "Name: " + str(
                 ans[4]) + str(
                 '\n') + "Enrollment Number: " + str(ans[5]) + str('\n') + "College: " + str(ans[1]) + str('\n') + str(
                 "Branch: ") + str(ans[2]) + str('\n') + "Percentage: " + str(ans[10]) + str(
                 '%\n') + "College Rank :{}/{}".format(ans[6], ans[7]) + str('\n') + "University Rank :{}/{}\n".format(
-                ans[8], ans[9]) + '\nMarks Format\n*Subject  Internal  External  Total*\n\n\n' + marks
-
-            label.text = to_send
+                ans[8], ans[9]) + str('[/i]')
+            info.text = to_send
+            self.datatables = MDDataTable(
+                size_hint=(0.9, 0.6),
+                row_data=marks,
+                rows_num=20,
+                column_data=[
+                    ("Subject", dp(35)),
+                    ("Internal", dp(20)),
+                    ("External", dp(20)),
+                    ("Total", dp(20)),
+                ]
+            )
 
 
 class MainApp(MDApp):
