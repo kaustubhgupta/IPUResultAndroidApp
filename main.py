@@ -109,7 +109,7 @@ class MainApp(MDApp):
     def build(self):
         Builder.load_file('result.kv')
         global token
-        url ='https://ipuresultskg.herokuapp.com/' + 'getToken?key=androidappbot'
+        url ='https://ipuresultskg.herokuapp.com/' + 'getToken?key=getservicekeyfrommepersonally'
         r = requests.get(url)
         token = json.loads(r.content)['token']
         return MainScreen()
