@@ -8,6 +8,8 @@ from kivymd.uix.dialog import MDDialog
 from kivymd.uix.datatables import MDDataTable
 from kivy.metrics import dp
 import webbrowser
+import requests
+import json
 
 
 class MainScreen(Screen):
@@ -41,10 +43,8 @@ class MainScreen(Screen):
             callback=self.set_semester,
             width_mult=4,
         )
-        self.request = ''
         self.data = ''
         self.datatables = ''
-
 
     def openweb(instance, link):
         webbrowser.open(link)
@@ -52,20 +52,20 @@ class MainScreen(Screen):
     def set_semester(self, instance):
         self.ids.drop_semester.text = instance.text
         self.semester_get = instance.text
-        print(instance.text)
+        #print(instance.text)
         self.menu_semester.dismiss()
 
     def set_batch(self, instance):
         self.ids.drop_batch.text = instance.text
         self.batch_get = instance.text
-        print(instance.text)
+        #print(instance.text)
         self.menu_batch.dismiss()
 
     def btn(self):
         label = self.ids.loading
         label.text = "Wait! Your result is being prepared :)"
         baseurl = "https://ipuresultskg.herokuapp.com/"
-        url = baseurl + 'api?rollNo={}&batch={}&semester={}'.format(self.number.text, self.batch_get, self.semester_get)
+        url = baseurl + 'api?rollNo={}&batch={}&semester={}&token={}'.format(self.number.text, self.batch_get, self.semester_get, token)
         self.request = UrlRequest(url=url, on_success=self.res)
 
     def network(self, *args):
@@ -108,6 +108,10 @@ class MainScreen(Screen):
 class MainApp(MDApp):
     def build(self):
         Builder.load_file('result.kv')
+        global token
+        url ='https://ipuresultskg.herokuapp.com/' + 'getToken?key=androidappbot'
+        r = requests.get(url)
+        token = json.loads(r.content)['token']
         return MainScreen()
 
 
