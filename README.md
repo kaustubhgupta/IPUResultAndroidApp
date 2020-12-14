@@ -1,5 +1,5 @@
-![A Demo GIF](demo/demo.gif)
 # IPUResultAndroidApp
+![A Demo GIF](demo/demo.gif)
 This is the extension to my IPU results website. This app will fetch data from the website's own REST API and then display it on the screen.
 
 ## How it works?
@@ -13,10 +13,12 @@ The app fetches the json data returned by the previosuly deployed IPU website an
 - Python-to-android
 - android-sdk
 - REST API
-- JWT Authentication
 
 ## Note:
-*Currently the app doesn'nt work well in android and will crash at the startup. It will work perfectly as a windows and IOS app. I am working to fix android deployment part and hopefully the app will be available on Google Playstore soon :-)*
+~~Currently the app doesn'nt work well in android and will crash at the startup. It will work perfectly as a windows and IOS app. I am working to fix android deployment part and hopefully the app will be available on Google Playstore soon :-)~~
+
+The App is now converted into APK! Try it on here:
+
 
 ## Want to contribute?
 Raise an issue and if it is worth noting then we will work as a team :-)
