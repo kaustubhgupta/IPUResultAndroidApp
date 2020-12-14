@@ -8,6 +8,7 @@ from kivymd.uix.dialog import MDDialog
 from kivymd.uix.datatables import MDDataTable
 from kivy.metrics import dp
 import webbrowser
+import certifi as cfi
 
 kv = '''
 <MainScreen>:
@@ -321,7 +322,7 @@ class MainScreen(Screen):
         baseurl = "https://ipubackendapi.herokuapp.com/"
         url = baseurl + 'score?eNumber={}&batch={}&semester={}'.format(
             self.number.text, self.batch_get, self.semester_get)
-        self.request = UrlRequest(url=url, on_success=self.res)
+        self.request = UrlRequest(url=url, on_success=self.res, ca_file=cfi.where(), verify=True)
 
     def network(self, *args):
         return self.dialog_network
