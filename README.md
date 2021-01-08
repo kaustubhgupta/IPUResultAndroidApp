@@ -1,4 +1,7 @@
 # IPUResultAndroidApp
+
+![IPUResultAndroidApp](https://socialify.git.ci/kaustubhgupta/IPUResultAndroidApp/image?language=1&theme=Light&stargazers=1&description=1&pulls=1&issues=1&forks=1&owner=1)
+
 ![A Demo GIF](demo/demo.gif)
 The app fetches the data from the backend API and then it is processed to be displayed on the screen. The app is purely build using Python and Kivy with Kivymd as an enhancement over it. Kivy makes it easy to seperate betwween logic file and UI file. UI file is made using Kivy and Kivymd and logics are written in python.
 
